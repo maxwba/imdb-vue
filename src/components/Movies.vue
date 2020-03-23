@@ -47,14 +47,23 @@
         />
       </div>
     </b-card>
-    <b-modal v-model="movieDetailsVisible" id="modal-center" centered>
-      <MovieDetails :movie="currentMovie" />
+    <b-modal
+      v-model="movieDetailsVisible"
+      id="modal-center"
+      hide-footer
+      :title="currentMovie.Title"
+    >
+      <b-container>
+        <MovieDetails :movie="currentMovie" />
+      </b-container>
     </b-modal>
   </div>
 </template>
 
 <script>
 import axios from "axios";
+import { BContainer } from 'bootstrap-vue';
+
 
 import MovieCard from "./MovieCard";
 import MovieDetails from "./MovieDetails";
@@ -67,14 +76,14 @@ export default {
       movieSearchQuery: "",
       moviesList: [],
       fetchinMovies: false,
-      currentMovie: null,
-      movieDetailsVisible: false,
+      currentMovie: {},
+      movieDetailsVisible: false
     };
   },
   // Components
   components: {
     MovieCard: MovieCard,
-    MovieDetails: MovieDetails,
+    MovieDetails: MovieDetails
   },
   methods: {
     showMovieDetails(movie) {
