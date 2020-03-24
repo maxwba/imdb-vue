@@ -11,7 +11,7 @@
         <b-col sm="5">
           <b-form-input
             type="search"
-            @change="fetchMovies"
+            @change="fetchMoviesList(movieSearchQuery)"
             v-model="movieSearchQuery"
             id="input-small"
             size="sm"
@@ -20,7 +20,7 @@
         </b-col>
       </b-row>
       <!-- Blank state -->
-      <div v-if="moviesList.length === 0 && !fetchinMovies" class="content">
+      <div v-if="moviesList.length === 0 && !fetchingMovies" class="content">
         <b-card
           class="m-4"
           title="Movie title"
@@ -32,7 +32,7 @@
         ></b-card>
       </div>
       <!-- Loading -->
-      <div v-else-if="fetchinMovies && moviesList.length === 0" class="content">
+      <div v-else-if="fetchingMovies && moviesList.length === 0" class="content">
         <b-card class="m-4" img-top tag="article" style="max-width: 20rem;">
           <b-spinner label="Loading..."></b-spinner>
         </b-card>
@@ -62,6 +62,8 @@
 
 <script>
 import axios from "axios";
+import {mapGetters, mapActions} from "vuex";
+
 import { BContainer } from 'bootstrap-vue';
 
 
@@ -74,8 +76,6 @@ export default {
     // State
     return {
       movieSearchQuery: "",
-      moviesList: [],
-      fetchinMovies: false,
       currentMovie: {},
       movieDetailsVisible: false
     };
@@ -85,21 +85,20 @@ export default {
     MovieCard: MovieCard,
     MovieDetails: MovieDetails
   },
+  computed: {
+    ...mapGetters(["moviesList", "fetchingMovies"])
+  },
   methods: {
+    ...mapActions(['fetchMoviesList']),
     showMovieDetails(movie) {
       this.currentMovie = movie;
       this.movieDetailsVisible = true;
     },
-    async fetchMovies() {
-      this.fetchinMovies = true;
-      const response = await axios.get(
-        `https://www.omdbapi.com/?apikey=d526ad92&s=${this.movieSearchQuery}`
-      );
-      this.moviesList = response.data.Search || [];
-      this.fetchinMovies = false;
-    }
   }
 };
+
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
