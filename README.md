@@ -1,4 +1,10 @@
-# imdb_movies
+# IMDB Finder
+```
+Search and find tv shows, games and movies.
+API used: http://www.omdbapi.com/
+Vue.js
+BootstrapVue
+```
 
 ## Project setup
 ```
