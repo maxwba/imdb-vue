@@ -1,6 +1,7 @@
 # IMDB Finder
 ```
 Search and find tv shows, games and movies.
+App website: https://omdb-vue-movies.netlify.com/
 API used: http://www.omdbapi.com/
 Vue.js
 BootstrapVue
