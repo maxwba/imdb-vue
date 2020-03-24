@@ -30,7 +30,7 @@ export default {
   async mounted() {
     this.fetchinMovieDetail = true;
     const response = await axios.get(
-      `http://www.omdbapi.com/?apikey=d526ad92&i=${this.movie.imdbID}`
+      `https://www.omdbapi.com/?apikey=d526ad92&i=${this.movie.imdbID}`
     );
     this.movieInfo = response.data;
     this.fetchinMovieDetail = false;

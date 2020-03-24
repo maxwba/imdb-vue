@@ -93,9 +93,9 @@ export default {
     async fetchMovies() {
       this.fetchinMovies = true;
       const response = await axios.get(
-        `http://www.omdbapi.com/?apikey=d526ad92&s=${this.movieSearchQuery}`
+        `https://www.omdbapi.com/?apikey=d526ad92&s=${this.movieSearchQuery}`
       );
-      this.moviesList = response.data.Search;
+      this.moviesList = response.data.Search || [];
       this.fetchinMovies = false;
     }
   }
