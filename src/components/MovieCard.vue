@@ -11,23 +11,30 @@
   >
     <b-card-text>Year: {{movie.Year}}</b-card-text>
     <div>
-      <b-button @click="$emit('showMovieDetails', movie)" variant="outline-primary">Details</b-button>
+      <b-button @click="showMovieDetails" variant="outline-primary">Details</b-button>
     </div>
   </b-card>
 </template>
 
 <script>
+import { mapGetters, mapMutations } from "vuex";
 
 export default {
   name: "MovieCard",
-  data()  {
-    return {
-    };
+  data() {
+    return {};
   },
   props: ["movie"],
-  components: {
+  computed: {
+    ...mapGetters(["currentMovie", "movieDetailsVisible"])
   },
+  components: {},
   methods: {
+    ...mapMutations(["setCurrentMovie", "setMovieDetailsVisible"]),
+    showMovieDetails() {
+      this.setCurrentMovie(this.movie);
+      this.setMovieDetailsVisible(true);
+    }
   }
 };
 </script>

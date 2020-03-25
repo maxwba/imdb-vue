@@ -12,7 +12,8 @@
           <b-form-input
             type="search"
             @change="fetchMoviesList(movieSearchQuery)"
-            v-model="movieSearchQuery"
+            :value="movieSearchQuery"
+            @input="setMovieSearchQuery"
             id="input-small"
             size="sm"
             placeholder="Type a name and hit enter"
@@ -43,15 +44,15 @@
           v-for="movie in moviesList"
           :key="movie.id"
           :movie="movie"
-          @showMovieDetails="showMovieDetails(movie)"
         />
       </div>
     </b-card>
     <b-modal
-      v-model="movieDetailsVisible"
+      :visible="movieDetailsVisible"
       id="modal-center"
       hide-footer
       :title="currentMovie.Title"
+      @hidden="setMovieDetailsVisible(false)"
     >
       <b-container>
         <MovieDetails :movie="currentMovie" />
@@ -62,10 +63,9 @@
 
 <script>
 import axios from "axios";
-import {mapGetters, mapActions} from "vuex";
+import { mapGetters, mapActions, mapMutations } from "vuex";
 
-import { BContainer } from 'bootstrap-vue';
-
+import { BContainer } from "bootstrap-vue";
 
 import MovieCard from "./MovieCard";
 import MovieDetails from "./MovieDetails";
@@ -75,9 +75,6 @@ export default {
   data() {
     // State
     return {
-      movieSearchQuery: "",
-      currentMovie: {},
-      movieDetailsVisible: false
     };
   },
   // Components
@@ -86,19 +83,13 @@ export default {
     MovieDetails: MovieDetails
   },
   computed: {
-    ...mapGetters(["moviesList", "fetchingMovies"])
+    ...mapGetters(["moviesList", "fetchingMovies", "movieSearchQuery", "currentMovie", "movieDetailsVisible"])
   },
   methods: {
-    ...mapActions(['fetchMoviesList']),
-    showMovieDetails(movie) {
-      this.currentMovie = movie;
-      this.movieDetailsVisible = true;
-    },
+    ...mapActions(["fetchMoviesList"]),
+    ...mapMutations(["setMovieSearchQuery", "setCurrentMovie", "setMovieDetailsVisible"]),
   }
 };
-
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

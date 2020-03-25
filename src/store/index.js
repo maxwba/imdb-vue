@@ -7,7 +7,10 @@ Vue.use(Vuex);
 const store = new Vuex.Store({
   state: {
     moviesList: [],
-    fetchingMovies: false
+    fetchingMovies: false,
+    movieSearchQuery: "",
+    currentMovie: {}, // New state
+    movieDetailsVisible: false
   },
   getters: {
     moviesList(state) {
@@ -15,6 +18,15 @@ const store = new Vuex.Store({
     },
     fetchingMovies(state) {
       return state.fetchingMovies;
+    },
+    movieSearchQuery(state) {
+      return state.movieSearchQuery;
+    },
+    currentMovie(state) {
+      return state.currentMovie; // New state
+    },
+    movieDetailsVisible(state) {
+      return state.movieDetailsVisible;
     }
   },
   mutations: {
@@ -23,8 +35,17 @@ const store = new Vuex.Store({
     },
     setFetchingMovies(state, payload) {
       state.fetchingMovies = payload;
+    },
+    setMovieSearchQuery(state, payload) {
+      state.movieSearchQuery = payload;
+    },
+    setCurrentMovie(state, payload) {
+      state.currentMovie = payload; // New state
+    },
+    setMovieDetailsVisible(state, payload) {
+      state.movieDetailsVisible = payload;
     }
-  }, // Funcoes atomicas que mudam o state
+  },
   actions: {
     async fetchMoviesList({ commit }, payload) {
       commit("setFetchingMovies", true);
